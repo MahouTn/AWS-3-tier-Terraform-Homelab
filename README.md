@@ -9,11 +9,11 @@ This project defines and deploys a secure, highly available 3-Tier Web Applicati
 
 The architecture is divided into three logical tiers, each residing in private or public subnets and secured by dedicated Security Groups (SGs).
 
-1. Web Tier (Public): Hosts the Application Load Balancer (ALB) and public-facing network components. The ALB routes traffic to the Web Servers in the Application Tier.
+1. Web/Public Tier: Contains the Application Load Balancer (ALB) which routes external HTTPS/HTTP traffic to the private application servers. It also includes a    Bastion Host for secure, controlled management access.
 
-2. Application Tier (Private): Contains the EC2 instances running the application logic (e.g., Python, Node.js, Java). These instances can only be accessed via the ALB or Bastion host for security.
+2. Application Tier (Private): Contains EC2 instances (running a mock Nginx app via user_data). Instances have no public IP and are only accessible via the ALB or the Bastion Host.
 
-3. Database Tier (Private): Hosts the Amazon RDS instance (or similar managed database). This tier has no direct public internet access, ensuring maximum security for data.
+3. Database Tier (Private): Hosts the Amazon RDS instance (or mock DB), isolated in private subnets with restricted access only from the Application Tier.
 
 ### 🛠️ Technologies Used
 Terraform: Infrastructure as Code (IaC) for resource orchestration.
@@ -60,15 +60,15 @@ This command will create all the AWS resources defined in the configuration file
 ```
 
 
-4. Get the Website URL:
-After a successful terraform apply, the output will provide the public URL of your new website.
+4. Get the Application Endpoint URL:
+After a successful terraform apply, the output will provide the public DNS name of your Application Load Balancer.
 ```
 -> terraform output "alb_dns_name"
 ```
 Navigate to this URL in your browser to verify the application's availability.
 
 5. Verify the Application in the Browser
-Navigate to the Public IP in your web browser to confirm the application is serving the index.html content on Port 80.
+Navigate to the ALB DNS name in your web browser to confirm the load balancer is successfully routing traffic to the private EC2 instances.
 
 ![S3](https://i.imgur.com/KQP7wYK.png)
 ![S3](https://i.imgur.com/EqGETdz.png)
@@ -78,9 +78,11 @@ To avoid incurring any costs, you can destroy all the created resources with a s
 ```
 -> terraform destroy
 ```
+This will safely terminate all EC2 instances, delete the RDS database, and remove all network infrastructure.
 
 WARNING: This command is destructive and will terminate the EC2 instances, delete the RDS database, and remove all network infrastructure. All data will be lost.
 
 
-This will safely terminate the EC2 instance and remove all network infrastructure.
+
+
 

@@ -39,7 +39,7 @@ Follow these steps to deploy the full 3-Tier environment:
 
 1. Clone the Repository:
 ```
--> git clone [[https://github.com/MahouTn/aws-flask-gunicorn-terraform.git](https://github.com/MahouTn/aws-flask-gunicorn-terraform.git](https://github.com/MahouTn/AWS-3-tier-Terraform-Homelab.git))
+-> git clone [https://github.com/MahouTn/aws-flask-gunicorn-terraform.git]
 -> cd terraform-files
 ```
 
@@ -83,3 +83,4 @@ WARNING: This command is destructive and will terminate the EC2 instances, delet
 
 
 This will safely terminate the EC2 instance and remove all network infrastructure.
+

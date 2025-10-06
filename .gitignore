@@ -1,0 +1,8 @@
+# Terraform files to ignore
+/terraform-files/.terraform/
+/terraform-files/*.tfstate
+/terraform-files/*.tfstate.backup
+/terraform-files/.terraform.lock.hcl
+architecture.png
+output-1.png
+output-2.png
